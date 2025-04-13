@@ -7,15 +7,15 @@
 
 Cieľom zadania je implementovať jednoduchú aplikáciu manažéra úloh, tzv. TODO list pomocou jazyka C++ (štandard C++17).
 
-Program má pracovať so zoznam úloh, ktorý pomocou zadaných príkazov bude program upravovať.
+Program má pracovať so zoznamom úloh, ktorý pomocou zadaných príkazov bude upravovať.
 Zoznam úloh je ukladaný na disk do súboru. Program ponúka niekoľko príkazov a možností pre manipuláciu s úlohami.
 Program neponúka používateľské menu, spracuje zadaný príkaz a skončí.
 
-### Úloha
+### Úloha (Task)
 
 Úloha je objekt, ktorý má nasledovné atribúty:
 
-- **názov** - Názov úlohy. Typ `string`. Názov úlohy musí byť unikátny v rámci celého programu. Viaceré funkcionality
+- **názov** - Názov úlohy. Typ `string`. Názov úlohy je unikátny v rámci celého programu. Viaceré funkcionality
   vyhľadajú úlohu podľa názvu.
 - **popis** - Dlhší popis o obsahu úlohy. Typ `string`.
 - **priorita** - Priorita označujúca dôležitosť úlohy. Typ `int`. Nadobúda hodnoty kladných čísel (t.j. N > 0). Čím
@@ -84,7 +84,9 @@ Ak je úloha so zadaným názvom nájdená, úloha je označená ako dokončená
 ### Vypísanie úloh pre určitý dátum
 
 `zadanie2 list [-d --deadline termín_úlohy] [--done]`
+
 `zadanie2 list [--today] [--done]`
+
 `zadanie2 list [--tomorrow] [--done]`
 
 Ak je ako prvý argument uvedený príkaz `list` sú vypísané úlohy podľa zadaných kritérií na základe uvedených parametrov:
@@ -116,13 +118,16 @@ vypísať.
 V rámci implementácie programu môžte použiť všetky štandardné knižnice a funkcie jazyka C++, v štandarde C++17. Pre
 implementáciu štruktúr môžte použiť knižnice STL (ako vector, queue, map a ďalšie).
 
+### Knižnice
+
 Je odporúčané použiť knižnice a funkcie, ktoré sú zahrnuté v tomto projekte. Pre ich použitie ich stačí zahrnúť do Vášho
 zdrojového kódu: `#include "cxxopts.hpp"` a `#include "utils.hpp"` . Knižnice sú automaticky zahrnuté pri kompilácii
 vďaka cmake konfigurácií. Zdrojové kódy knižníc sa nachádzajú v priečinku _include_.
 
 Pre implementáciu spracovania argumentu a parametrov je odporúčané použiť knižnicu cxxopts 
-[https://github.com/jarro2783/cxxopts](https://github.com/jarro2783/cxxopts)
-, ktorá je už zahrnutá v tomto projekte.
+[https://github.com/jarro2783/cxxopts](https://github.com/jarro2783/cxxopts), ktorá je už zahrnutá v tomto projekte.
+
+### Súbor tasks.db
 
 Program má pri svojom spustení **načítať súbor `tasks.db`**. Ide o textový súbor, kde sú uložené všetky úlohy s ktorými
 má program pracovať. Ak súbor pri spustený neexistuje je automaticky vytvorený v priečinku, kde je program spustený
@@ -146,21 +151,27 @@ Pozrieť si AVL strom|Mal by som sa bližšie pozrieť na AVL strom|2|2025-04-21
 Prihlásiť sa na zadanie2||2|2025-04-14|1
 ```
 
+### AVL strom
+
 Úlohy implementujte ako C++ triedu. Pre zoznam úloh môžte použiť ľubovoľne zvolený STL kontajner či inú štruktúru,
 ktorú uznáte za vhodnú pri zadanej funkcionalite. V rámci programu **implementujte vlastný AVL strom** (samo-vyvažovací
 vyhľadávací strom), ktorý **má predstavovať index úloh podľa termínu úlohy**, t.j. podľa stringu vo formáte dátumu.
 Pre porovnanie uzlov stromu použite funkciu [`int std:strcmp(const char *str1, const char *str2)`](https://www.geeksforgeeks.org/strcmp-in-c/).
 V rámci uzla stromu má byť zoznam/vektor na referencie/pointre úloh, ktoré pripadajú pre daný dátum. Pridanie novej
-úlohy má pridať aj ponter na túto úloh do stromu pre daný dátum a tak isto pri vymazaní úlohy má odstrániť pointer na
+úlohy má pridať aj pointer na túto úloh do stromu pre daný dátum a tak isto pri vymazaní úlohy má odstrániť pointer na
 úlohu zo stromu. Viac o AVL strome sa môžte dozvedieť tu:
 
 - [https://www.programiz.com/dsa/avl-tree](https://www.programiz.com/dsa/avl-tree)
 - [https://www.geeksforgeeks.org/introduction-to-avl-tree/](https://www.geeksforgeeks.org/introduction-to-avl-tree/)
 - [https://dsa.interes.group/examples/trees/avl_tree/](https://dsa.interes.group/examples/trees/avl_tree/)
 
+### Zdrojové súbory
+
 Implementácia môže byť umiestnená v jednom alebo viacerých zdrojových _.cpp_ súboroch. Program musí byť spúšťaný z main
 súboru, `src/main.cpp`. V prípade rozdelenie kódu do viacerých súborov, nezabudnite pridať tieto zdrojové súbory do
 príkazu `add_executable` v rámci súboru _src/CMakeLists.txt_ aby boli skompilované s celým programom.
+
+### Git
 
 Pre kontrolu kompilácie je v repozitáry nastavená automatizácia cez GitHub pipeline. Pipeline sa spustí automaticky pre
 každý `git push` do vetvy `main`. GitHub pipeline sa pokúsi kód v repozitáry z posledného commitu skompilovať a následne
